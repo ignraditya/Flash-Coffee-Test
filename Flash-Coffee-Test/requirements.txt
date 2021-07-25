@@ -1,0 +1,17 @@
+Appium-Python-Client==0.36
+urllib3==1.24.3
+robotframework==3.2.1
+robotframework-appiumlibrary==1.4.6
+robotframework-debuglibrary==1.1.4
+robotframework-faker==4.2.0
+robotframework-lint
+selenium==3.14.1
+lxml==4.3.1
+dominate==2.3.5
+requests==2.25.1
+opencv-python==4.4.0.40
+configparser==3.7.4
+Faker==2.0.1
+jsonpath-ng==1.4.3
+RESTinstance==1.0.2
+pytesseract

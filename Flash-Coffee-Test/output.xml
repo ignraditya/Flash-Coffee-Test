@@ -1,0 +1,813 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 3.2.1 (Python 3.7.5 on darwin)" generated="20210724 16:55:40.356" rpa="false">
+<suite id="s1" name="FlashCoffeeTest" source="/Users/reinardnathanael/Downloads/Flash-Coffee-Test/test/FlashCoffeeTest.robot">
+<kw name="Spawn Appium Server" library="Setup" type="setup">
+<kw name="Run Keyword Unless" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments if ``condition`` is false.</doc>
+<arguments>
+<arg>${REMOTE_APPIUM_SERVER}</arg>
+<arg>Spawn Local Appium Server</arg>
+</arguments>
+<kw name="Spawn Local Appium Server" library="Setup">
+<kw name="Run Process" library="Process">
+<doc>Runs a process and waits for it to complete.</doc>
+<arguments>
+<arg>kill $(lsof -t -i:${PORT})</arg>
+<arg>shell=true</arg>
+</arguments>
+<msg timestamp="20210724 16:55:40.801" level="INFO">Starting process:
+kill $(lsof -t -i:4729)</msg>
+<msg timestamp="20210724 16:55:40.807" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20210724 16:55:40.879" level="INFO">Process completed.</msg>
+<status status="PASS" starttime="20210724 16:55:40.801" endtime="20210724 16:55:40.879"></status>
+</kw>
+<kw name="Run Keyword And Ignore Error" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments and ignores possible error.</doc>
+<arguments>
+<arg>Run Process</arg>
+<arg>rm -f ${WORKING_PATH}/appium-log.txt</arg>
+<arg>shell=true</arg>
+</arguments>
+<kw name="Run Process" library="Process">
+<doc>Runs a process and waits for it to complete.</doc>
+<arguments>
+<arg>rm -f ${WORKING_PATH}/appium-log.txt</arg>
+<arg>shell=true</arg>
+</arguments>
+<msg timestamp="20210724 16:55:40.881" level="INFO">Starting process:
+rm -f /Users/reinardnathanael/Downloads/Flash-Coffee-Test/appium-log.txt</msg>
+<msg timestamp="20210724 16:55:40.886" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20210724 16:55:40.890" level="INFO">Process completed.</msg>
+<status status="PASS" starttime="20210724 16:55:40.880" endtime="20210724 16:55:40.890"></status>
+</kw>
+<status status="PASS" starttime="20210724 16:55:40.880" endtime="20210724 16:55:40.890"></status>
+</kw>
+<kw name="Start Process" library="Process">
+<doc>Starts a new process on background.</doc>
+<arguments>
+<arg>appium</arg>
+<arg>-p</arg>
+<arg>${PORT}</arg>
+<arg>-bp</arg>
+<arg>${BOOTSTRAP_PORT}</arg>
+<arg>alias=appiumVideo</arg>
+<arg>stdout=${WORKING_PATH}/appium-log.txt</arg>
+</arguments>
+<msg timestamp="20210724 16:55:40.893" level="INFO">Starting process:
+appium -p 4729 -bp 50009</msg>
+<status status="PASS" starttime="20210724 16:55:40.891" endtime="20210724 16:55:40.901"></status>
+</kw>
+<kw name="Wait Until Appium Ready" library="AppiumHelper">
+<arguments>
+<arg>${PORT}</arg>
+<arg>40</arg>
+</arguments>
+<status status="PASS" starttime="20210724 16:55:40.901" endtime="20210724 16:55:42.941"></status>
+</kw>
+<kw name="Run Process" library="Process">
+<doc>Runs a process and waits for it to complete.</doc>
+<arguments>
+<arg>adb -s ${UDID} shell pm clear ${APP_PACKAGE}</arg>
+<arg>shell=True</arg>
+</arguments>
+<msg timestamp="20210724 16:55:42.942" level="INFO">Starting process:
+adb -s emulator-5554 shell pm clear com.flashcoffee</msg>
+<msg timestamp="20210724 16:55:42.950" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20210724 16:55:43.222" level="INFO">Process completed.</msg>
+<status status="PASS" starttime="20210724 16:55:42.941" endtime="20210724 16:55:43.223"></status>
+</kw>
+<status status="PASS" starttime="20210724 16:55:40.801" endtime="20210724 16:55:43.223"></status>
+</kw>
+<status status="PASS" starttime="20210724 16:55:40.800" endtime="20210724 16:55:43.223"></status>
+</kw>
+<kw name="Open Device Application" library="Setup">
+<kw name="Open Application" library="AppiumLibrary">
+<doc>Opens a new application to given Appium server.
+Capabilities of appium server, Android and iOS,
+Please check https://github.com/appium/appium/blob/master/docs/en/writing-running-appium/server-args.md
+| *Option*            | *Man.* | *Description*     |
+| remote_url          | Yes    | Appium server url |
+| alias               | no     | alias             |</doc>
+<arguments>
+<arg>${APPIUM_SERVER}</arg>
+<arg>platformName=${PLATFORM_NAME}</arg>
+<arg>deviceName=${DEVICE_NAME}</arg>
+<arg>appPackage=${APP_PACKAGE}</arg>
+<arg>appActivity=${APP_ACTIVITY}</arg>
+<arg>udid=${UDID}</arg>
+<arg>newCommandTimeout=3000</arg>
+<arg>fullReset=false</arg>
+<arg>alias=appiumVideo</arg>
+<arg>noReset=True</arg>
+<arg>automationName=UiAutomator1</arg>
+</arguments>
+<status status="PASS" starttime="20210724 16:55:43.224" endtime="20210724 16:55:46.761"></status>
+</kw>
+<status status="PASS" starttime="20210724 16:55:43.224" endtime="20210724 16:55:46.762"></status>
+</kw>
+<kw name="Allow Device Location" library="Setup">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>Wait Until Element Is Visible</arg>
+<arg>id=com.android.packageinstaller:id/permission_allow_button</arg>
+<arg>timeout=5</arg>
+</arguments>
+<assign>
+<var>${status}</var>
+</assign>
+<kw name="Wait Until Element Is Visible" library="AppiumLibrary">
+<doc>Waits until element specified with `locator` is visible.</doc>
+<arguments>
+<arg>id=com.android.packageinstaller:id/permission_allow_button</arg>
+<arg>timeout=5</arg>
+</arguments>
+<status status="PASS" starttime="20210724 16:55:46.763" endtime="20210724 16:55:51.611"></status>
+</kw>
+<msg timestamp="20210724 16:55:51.611" level="INFO">${status} = True</msg>
+<status status="PASS" starttime="20210724 16:55:46.763" endtime="20210724 16:55:51.611"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>'${status}'=='${True}'</arg>
+<arg>Click Element</arg>
+<arg>id=com.android.packageinstaller:id/permission_allow_button</arg>
+</arguments>
+<kw name="Click Element" library="AppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>id=com.android.packageinstaller:id/permission_allow_button</arg>
+</arguments>
+<msg timestamp="20210724 16:55:51.613" level="INFO">Clicking element 'id=com.android.packageinstaller:id/permission_allow_button'.</msg>
+<status status="PASS" starttime="20210724 16:55:51.612" endtime="20210724 16:55:51.815"></status>
+</kw>
+<status status="PASS" starttime="20210724 16:55:51.612" endtime="20210724 16:55:51.815"></status>
+</kw>
+<status status="PASS" starttime="20210724 16:55:46.762" endtime="20210724 16:55:51.815"></status>
+</kw>
+<kw name="Register Keyword To Run On Failure" library="AppiumLibrary">
+<doc>Sets the keyword to execute when a AppiumLibrary keyword fails.</doc>
+<arguments>
+<arg>Capture Page Screenshot</arg>
+</arguments>
+<msg timestamp="20210724 16:55:51.817" level="INFO">Capture Page Screenshot will be run on failure.</msg>
+<status status="PASS" starttime="20210724 16:55:51.816" endtime="20210724 16:55:51.817"></status>
+</kw>
+<kw name="Get Device Dimensions" library="DeviceUtility">
+<kw name="Get Element Size" library="AppiumLibrary">
+<doc>Get element size</doc>
+<arguments>
+<arg>xpath=(//android.widget.FrameLayout)[2]</arg>
+</arguments>
+<assign>
+<var>${SIZE}</var>
+</assign>
+<msg timestamp="20210724 16:55:52.548" level="INFO">Element 'xpath=(//android.widget.FrameLayout)[2]' size: {'height': 2308, 'width': 1440} </msg>
+<msg timestamp="20210724 16:55:52.548" level="INFO">${SIZE} = {'height': 2308, 'width': 1440}</msg>
+<status status="PASS" starttime="20210724 16:55:51.819" endtime="20210724 16:55:52.549"></status>
+</kw>
+<kw name="Get Dictionary Values" library="Collections">
+<doc>Returns values of the given ``dictionary`` as a list.</doc>
+<arguments>
+<arg>${SIZE}</arg>
+</arguments>
+<assign>
+<var>${values}</var>
+</assign>
+<msg timestamp="20210724 16:55:52.549" level="INFO">${values} = [2308, 1440]</msg>
+<status status="PASS" starttime="20210724 16:55:52.549" endtime="20210724 16:55:52.549"></status>
+</kw>
+<kw name="Get From List" library="Collections">
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<arguments>
+<arg>${values}</arg>
+<arg>0</arg>
+</arguments>
+<assign>
+<var>${HEIGHT}</var>
+</assign>
+<msg timestamp="20210724 16:55:52.550" level="INFO">${HEIGHT} = 2308</msg>
+<status status="PASS" starttime="20210724 16:55:52.550" endtime="20210724 16:55:52.550"></status>
+</kw>
+<kw name="Get From List" library="Collections">
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<arguments>
+<arg>${values}</arg>
+<arg>1</arg>
+</arguments>
+<assign>
+<var>${WIDTH}</var>
+</assign>
+<msg timestamp="20210724 16:55:52.551" level="INFO">${WIDTH} = 1440</msg>
+<status status="PASS" starttime="20210724 16:55:52.550" endtime="20210724 16:55:52.551"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>${WIDTH}</arg>
+</arguments>
+<msg timestamp="20210724 16:55:52.551" level="INFO">${WIDTH} = 1440</msg>
+<status status="PASS" starttime="20210724 16:55:52.551" endtime="20210724 16:55:52.552"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>${HEIGHT}</arg>
+</arguments>
+<msg timestamp="20210724 16:55:52.552" level="INFO">${HEIGHT} = 2308</msg>
+<status status="PASS" starttime="20210724 16:55:52.552" endtime="20210724 16:55:52.552"></status>
+</kw>
+<status status="PASS" starttime="20210724 16:55:51.818" endtime="20210724 16:55:52.552"></status>
+</kw>
+<kw name="Get Top Height General On Home" library="DeviceUtility">
+<kw name="Wait Until Element Is Visible" library="AppiumLibrary">
+<doc>Waits until element specified with `locator` is visible.</doc>
+<arguments>
+<arg>xpath=//*[@resource-id="${APP_PACKAGE}:id/action_bar_root"]</arg>
+<arg>timeout=3</arg>
+</arguments>
+<status status="PASS" starttime="20210724 16:55:52.553" endtime="20210724 16:55:52.685"></status>
+</kw>
+<kw name="Log Source" library="AppiumLibrary">
+<doc>Logs and returns the entire html source of the current page or frame.</doc>
+<assign>
+<var>${source}</var>
+</assign>
+<msg timestamp="20210724 16:55:53.071" level="INFO">&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;hierarchy rotation="0"&gt;&lt;android.widget.FrameLayout index="0" text="" class="android.widget.FrameLayout" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,0][1440,2392]" resource-id="" instance="0"&gt;&lt;android.widget.LinearLayout index="0" text="" class="android.widget.LinearLayout" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,0][1440,2392]" resource-id="" instance="0"&gt;&lt;android.widget.FrameLayout index="0" text="" class="android.widget.FrameLayout" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][1440,2392]" resource-id="" instance="1"&gt;&lt;android.widget.LinearLayout index="0" text="" class="android.widget.LinearLayout" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][1440,2392]" resource-id="com.flashcoffee:id/action_bar_root" instance="1"&gt;&lt;android.widget.FrameLayout index="0" text="" class="android.widget.FrameLayout" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][1440,2392]" resource-id="android:id/content" instance="2"&gt;&lt;android.widget.FrameLayout index="0" text="" class="android.widget.FrameLayout" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][1440,2392]" resource-id="" instance="3"&gt;&lt;android.view.ViewGroup index="0" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][1440,2392]" resource-id="" instance="0"&gt;&lt;android.view.ViewGroup index="0" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][1440,2392]" resource-id="" instance="1"&gt;&lt;android.view.ViewGroup index="0" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][1440,2392]" resource-id="" instance="2"&gt;&lt;android.widget.FrameLayout index="0" text="" class="android.widget.FrameLayout" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][1440,2392]" resource-id="" instance="4"&gt;&lt;android.view.ViewGroup index="0" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][1440,2392]" resource-id="" instance="3"&gt;&lt;android.view.ViewGroup index="1" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][1440,2392]" resource-id="" instance="4"&gt;&lt;android.view.ViewGroup index="0" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][1440,2392]" resource-id="" instance="5"&gt;&lt;android.view.ViewGroup index="0" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][1440,2392]" resource-id="" instance="6"&gt;&lt;android.view.ViewGroup index="0" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][1440,2392]" resource-id="" instance="7"&gt;&lt;android.view.ViewGroup index="0" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][1440,2392]" resource-id="" instance="8"&gt;&lt;android.view.ViewGroup index="1" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][1440,2392]" resource-id="" instance="9"&gt;&lt;android.view.ViewGroup index="1" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][1440,2392]" resource-id="" instance="10"&gt;&lt;android.view.ViewGroup index="0" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][1440,2392]" resource-id="" instance="11"&gt;&lt;android.widget.FrameLayout index="0" text="" class="android.widget.FrameLayout" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][1440,2392]" resource-id="" instance="5"&gt;&lt;android.view.ViewGroup index="0" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][1440,2392]" resource-id="" instance="12"&gt;&lt;android.view.ViewGroup index="0" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][1440,2392]" resource-id="" instance="13"&gt;&lt;android.widget.FrameLayout index="0" text="" class="android.widget.FrameLayout" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][1440,2392]" resource-id="" instance="6"&gt;&lt;android.view.ViewGroup index="0" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][1440,2392]" resource-id="" instance="14"&gt;&lt;android.view.ViewGroup index="1" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][1440,2392]" resource-id="" instance="15"&gt;&lt;android.view.ViewGroup index="0" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][1440,2392]" resource-id="" instance="16"&gt;&lt;android.view.ViewGroup index="0" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][1440,2392]" resource-id="" instance="17"&gt;&lt;android.view.ViewGroup index="0" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][1440,2392]" resource-id="" instance="18"&gt;&lt;android.view.ViewGroup index="0" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][1440,2392]" resource-id="" instance="19"&gt;&lt;android.widget.FrameLayout index="0" text="" class="android.widget.FrameLayout" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][1440,2392]" resource-id="" instance="7"&gt;&lt;android.view.ViewGroup index="0" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][1440,2392]" resource-id="" instance="20"&gt;&lt;android.view.ViewGroup index="1" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][1440,2392]" resource-id="" instance="21"&gt;&lt;android.view.ViewGroup index="0" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][1440,2392]" resource-id="" instance="22"&gt;&lt;android.view.ViewGroup index="0" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][1440,2392]" resource-id="" instance="23"&gt;&lt;android.view.ViewGroup index="0" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][1440,2392]" resource-id="" instance="24"&gt;&lt;android.view.ViewGroup index="0" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][1440,280]" resource-id="" instance="25"&gt;&lt;android.view.ViewGroup NAF="true" index="0" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][196,280]" resource-id="" instance="26"&gt;&lt;android.view.ViewGroup index="0" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[56,133][140,231]" resource-id="" instance="27"/&gt;&lt;/android.view.ViewGroup&gt;&lt;android.view.ViewGroup index="2" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][1440,280]" resource-id="" instance="28"&gt;&lt;android.view.ViewGroup index="0" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,84][1440,280]" resource-id="" instance="29"/&gt;&lt;/android.view.ViewGroup&gt;&lt;/android.view.ViewGroup&gt;&lt;android.view.ViewGroup index="1" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,280][1440,2392]" resource-id="" instance="30"&gt;&lt;android.view.ViewGroup index="0" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,280][1440,2392]" resource-id="" instance="31"&gt;&lt;android.view.ViewGroup index="0" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,280][1440,2392]" resource-id="" instance="32"&gt;&lt;android.widget.ScrollView index="0" text="" class="android.widget.ScrollView" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="true" focused="false" scrollable="true" long-clickable="false" password="false" selected="false" bounds="[0,280][1440,2392]" resource-id="" instance="0"&gt;&lt;android.view.ViewGroup index="0" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,280][1440,2392]" resource-id="" instance="33"&gt;&lt;android.view.ViewGroup index="0" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,280][1440,560]" resource-id="" instance="34"&gt;&lt;android.view.ViewGroup index="0" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,280][1440,448]" resource-id="" instance="35"/&gt;&lt;android.view.ViewGroup index="1" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="true" enabled="true" focusable="true" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[56,322][1384,560]" resource-id="" instance="36"&gt;&lt;android.view.ViewGroup index="0" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[88,399][200,483]" resource-id="" instance="37"&gt;&lt;android.view.ViewGroup index="0" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[95,399][193,483]" resource-id="" instance="38"&gt;&lt;android.view.ViewGroup index="0" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[95,399][193,483]" resource-id="" instance="39"/&gt;&lt;/android.view.ViewGroup&gt;&lt;/android.view.ViewGroup&gt;&lt;android.view.ViewGroup index="1" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[228,378][1213,504]" resource-id="" instance="40"&gt;&lt;android.widget.TextView index="0" text="PICK UP AT" class="android.widget.TextView" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[228,378][1213,434]" resource-id="" instance="0"/&gt;&lt;android.view.ViewGroup index="1" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[228,434][1213,504]" resource-id="" instance="41"&gt;&lt;android.widget.TextView index="0" text="Blok M Plaza" class="android.widget.TextView" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[228,434][545,504]" resource-id="" instance="1"/&gt;&lt;android.widget.TextView index="1" text=" (2km)" class="android.widget.TextView" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[545,438][681,501]" resource-id="" instance="2"/&gt;&lt;/android.view.ViewGroup&gt;&lt;/android.view.ViewGroup&gt;&lt;android.view.ViewGroup index="2" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[1241,392][1353,490]" resource-id="" instance="42"&gt;&lt;android.view.ViewGroup index="0" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[1241,392][1353,490]" resource-id="" instance="43"&gt;&lt;android.view.ViewGroup index="0" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[1241,392][1339,490]" resource-id="" instance="44"/&gt;&lt;/android.view.ViewGroup&gt;&lt;/android.view.ViewGroup&gt;&lt;/android.view.ViewGroup&gt;&lt;/android.view.ViewGroup&gt;&lt;android.view.ViewGroup index="1" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,560][1440,1995]" resource-id="" instance="45"&gt;&lt;android.view.ViewGroup index="0" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[91,588][846,676]" resource-id="" instance="46"/&gt;&lt;android.view.ViewGroup index="1" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[91,739][266,914]" resource-id="" instance="47"/&gt;&lt;android.view.ViewGroup index="2" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[301,739][731,791]" resource-id="" instance="48"/&gt;&lt;android.view.ViewGroup index="3" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[1087,739][1349,809]" resource-id="" instance="49"/&gt;&lt;android.view.ViewGroup index="4" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[301,845][1017,873]" resource-id="" instance="50"/&gt;&lt;android.view.ViewGroup index="5" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[301,908][1017,936]" resource-id="" instance="51"/&gt;&lt;android.view.ViewGroup index="6" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[301,971][1017,999]" resource-id="" instance="52"/&gt;&lt;android.view.ViewGroup index="7" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[301,1034][1017,1062]" resource-id="" instance="53"/&gt;&lt;android.view.ViewGroup index="8" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[91,1149][266,1324]" resource-id="" instance="54"/&gt;&lt;android.view.ViewGroup index="9" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[301,1149][731,1202]" resource-id="" instance="55"/&gt;&lt;android.view.ViewGroup index="10" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[301,1255][1017,1283]" resource-id="" instance="56"/&gt;&lt;android.view.ViewGroup index="11" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[301,1318][1017,1346]" resource-id="" instance="57"/&gt;&lt;android.view.ViewGroup index="12" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[301,1381][1017,1409]" resource-id="" instance="58"/&gt;&lt;android.view.ViewGroup index="13" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[301,1444][1017,1472]" resource-id="" instance="59"/&gt;&lt;android.view.ViewGroup index="14" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[91,1558][266,1733]" resource-id="" instance="60"/&gt;&lt;android.view.ViewGroup index="15" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[301,1558][731,1610]" resource-id="" instance="61"/&gt;&lt;android.view.ViewGroup index="16" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[301,1664][1017,1692]" resource-id="" instance="62"/&gt;&lt;android.view.ViewGroup index="17" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[301,1727][1017,1755]" resource-id="" instance="63"/&gt;&lt;android.view.ViewGroup index="18" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[301,1790][1017,1818]" resource-id="" instance="64"/&gt;&lt;android.view.ViewGroup index="19" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[301,1853][1017,1881]" resource-id="" instance="65"/&gt;&lt;/android.view.ViewGroup&gt;&lt;android.view.ViewGroup index="2" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,1995][1440,2392]" resource-id="" instance="66"&gt;&lt;android.view.ViewGroup index="0" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[91,2023][846,2111]" resource-id="" instance="67"/&gt;&lt;android.view.ViewGroup index="1" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[91,2174][266,2349]" resource-id="" instance="68"/&gt;&lt;android.view.ViewGroup index="2" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[301,2174][731,2226]" resource-id="" instance="69"/&gt;&lt;android.view.ViewGroup index="3" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[1087,2174][1349,2244]" resource-id="" instance="70"/&gt;&lt;android.view.ViewGroup index="4" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[301,2280][1017,2308]" resource-id="" instance="71"/&gt;&lt;android.view.ViewGroup index="5" text="" class="android.view.ViewGroup" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[301,2343][1017,2371]" resource-id="" instance="72"/&gt;&lt;/android.view.ViewGroup&gt;&lt;/android.view.ViewGroup&gt;&lt;/android.widget.ScrollView&gt;&lt;/android.view.ViewGroup&gt;&lt;/android.view.ViewGroup&gt;&lt;/android.view.ViewGroup&gt;&lt;/android.view.ViewGroup&gt;&lt;/android.view.ViewGroup&gt;&lt;/android.view.ViewGroup&gt;&lt;/android.view.ViewGroup&gt;&lt;/android.view.ViewGroup&gt;&lt;/android.widget.FrameLayout&gt;&lt;/android.view.ViewGroup&gt;&lt;/android.view.ViewGroup&gt;&lt;/android.view.ViewGroup&gt;&lt;/android.view.ViewGroup&gt;&lt;/android.view.ViewGroup&gt;&lt;/android.view.ViewGroup&gt;&lt;/android.widget.FrameLayout&gt;&lt;/android.view.ViewGroup&gt;&lt;/android.view.ViewGroup&gt;&lt;/android.widget.FrameLayout&gt;&lt;/android.view.ViewGroup&gt;&lt;/android.view.ViewGroup&gt;&lt;/android.view.ViewGroup&gt;&lt;/android.view.ViewGroup&gt;&lt;/android.view.ViewGroup&gt;&lt;/android.view.ViewGroup&gt;&lt;/android.view.ViewGroup&gt;&lt;/android.view.ViewGroup&gt;&lt;/android.view.ViewGroup&gt;&lt;/android.widget.FrameLayout&gt;&lt;/android.view.ViewGroup&gt;&lt;/android.view.ViewGroup&gt;&lt;/android.view.ViewGroup&gt;&lt;/android.widget.FrameLayout&gt;&lt;/android.widget.FrameLayout&gt;&lt;/android.widget.LinearLayout&gt;&lt;/android.widget.FrameLayout&gt;&lt;/android.widget.LinearLayout&gt;&lt;android.view.View index="1" text="" class="android.view.View" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,0][1440,84]" resource-id="android:id/statusBarBackground" instance="0"/&gt;&lt;android.view.View index="2" text="" class="android.view.View" package="com.flashcoffee" content-desc="" checkable="false" checked="false" clickable="false" enabled="true" focusable="false" focused="false" scrollable="false" long-clickable="false" password="false" selected="false" bounds="[0,2392][1440,2560]" resource-id="android:id/navigationBarBackground" instance="1"/&gt;&lt;/android.widget.FrameLayout&gt;&lt;/hierarchy&gt;</msg>
+<msg timestamp="20210724 16:55:53.072" level="INFO">${source} = &lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;hierarchy rotation="0"&gt;&lt;android.widget.FrameLayout index="0" text="" class="android.widget.FrameLayout" package="com.flashcoffee" content-desc="" checkable="fals...</msg>
+<status status="PASS" starttime="20210724 16:55:52.686" endtime="20210724 16:55:53.072"></status>
+</kw>
+<kw name="Get Element Attribute" library="XML">
+<doc>Returns the named attribute of the specified element.</doc>
+<arguments>
+<arg>${source}</arg>
+<arg>bounds</arg>
+<arg>.//*[@resource-id="${APP_PACKAGE}:id/action_bar_root"]</arg>
+</arguments>
+<assign>
+<var>${coordinate}</var>
+</assign>
+<msg timestamp="20210724 16:55:53.078" level="INFO">${coordinate} = [0,84][1440,2392]</msg>
+<status status="PASS" starttime="20210724 16:55:53.072" endtime="20210724 16:55:53.079"></status>
+</kw>
+<kw name="Get Top Bound" library="string_processing">
+<arguments>
+<arg>${coordinate}</arg>
+</arguments>
+<assign>
+<var>${TOP_HEIGHT}</var>
+</assign>
+<msg timestamp="20210724 16:55:53.079" level="INFO">${TOP_HEIGHT} = 84</msg>
+<status status="PASS" starttime="20210724 16:55:53.079" endtime="20210724 16:55:53.079"></status>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<arguments>
+<arg>${TOP_HEIGHT}</arg>
+</arguments>
+<msg timestamp="20210724 16:55:53.080" level="INFO">${TOP_HEIGHT} = 84</msg>
+<status status="PASS" starttime="20210724 16:55:53.080" endtime="20210724 16:55:53.080"></status>
+</kw>
+<status status="PASS" starttime="20210724 16:55:52.552" endtime="20210724 16:55:53.080"></status>
+</kw>
+<status status="PASS" starttime="20210724 16:55:40.800" endtime="20210724 16:55:53.080"></status>
+</kw>
+<test id="s1-t1" name="Flash Coffee Test">
+<kw name="Verify Pick Up At" library="Homepage">
+<kw name="Wait Until Element Is Visible" library="AppiumLibrary">
+<doc>Waits until element specified with `locator` is visible.</doc>
+<arguments>
+<arg>xpath=//*[@text="PICK UP AT"]</arg>
+<arg>timeout=3</arg>
+</arguments>
+<status status="PASS" starttime="20210724 16:55:53.082" endtime="20210724 16:55:53.215"></status>
+</kw>
+<status status="PASS" starttime="20210724 16:55:53.082" endtime="20210724 16:55:53.216"></status>
+</kw>
+<kw name="Verify Location Selected" library="Homepage">
+<kw name="Wait Until Element Is Visible" library="AppiumLibrary">
+<doc>Waits until element specified with `locator` is visible.</doc>
+<arguments>
+<arg>xpath=//*[@text="PICK UP AT"]/following-sibling::android.view.ViewGroup/android.widget.TextView</arg>
+<arg>timeout=1</arg>
+</arguments>
+<status status="PASS" starttime="20210724 16:55:53.217" endtime="20210724 16:55:53.361"></status>
+</kw>
+<status status="PASS" starttime="20210724 16:55:53.216" endtime="20210724 16:55:53.361"></status>
+</kw>
+<kw name="Get Selected Location Name" library="Homepage">
+<assign>
+<var>${chosen_location}</var>
+</assign>
+<kw name="Get Text" library="AppiumLibrary">
+<doc>Get element text (for hybrid and mobile browser use `xpath` locator, others might cause problem)</doc>
+<arguments>
+<arg>xpath=(//*[@text="PICK UP AT"]/following-sibling::android.view.ViewGroup/android.widget.TextView)[1]</arg>
+</arguments>
+<assign>
+<var>${open_store}</var>
+</assign>
+<msg timestamp="20210724 16:55:53.459" level="INFO">Element 'xpath=(//*[@text="PICK UP AT"]/following-sibling::android.view.ViewGroup/android.widget.TextView)[1]' text is 'Blok M Plaza' </msg>
+<msg timestamp="20210724 16:55:53.460" level="INFO">${open_store} = Blok M Plaza</msg>
+<status status="PASS" starttime="20210724 16:55:53.362" endtime="20210724 16:55:53.460"></status>
+</kw>
+<msg timestamp="20210724 16:55:53.460" level="INFO">${chosen_location} = Blok M Plaza</msg>
+<status status="PASS" starttime="20210724 16:55:53.362" endtime="20210724 16:55:53.460"></status>
+</kw>
+<kw name="Click Choose Location" library="Homepage">
+<kw name="Click Element" library="AppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//*[@text="PICK UP AT"]</arg>
+</arguments>
+<msg timestamp="20210724 16:55:53.465" level="INFO">Clicking element 'xpath=//*[@text="PICK UP AT"]'.</msg>
+<status status="PASS" starttime="20210724 16:55:53.462" endtime="20210724 16:55:53.664"></status>
+</kw>
+<status status="PASS" starttime="20210724 16:55:53.460" endtime="20210724 16:55:53.664"></status>
+</kw>
+<kw name="Make Sure Nearest and Not Closed Store" library="ChooseLocation">
+<arguments>
+<arg>${chosen_location}</arg>
+</arguments>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>3</arg>
+</arguments>
+<msg timestamp="20210724 16:55:56.666" level="INFO">Slept 3 seconds</msg>
+<status status="PASS" starttime="20210724 16:55:53.666" endtime="20210724 16:55:56.667"></status>
+</kw>
+<kw name="Scroll To Element" library="DeviceUtility">
+<arguments>
+<arg>xpath=//*[@text="${open_store}"]</arg>
+</arguments>
+<kw name="${count} IN RANGE [ 0 | 20 ]" type="for">
+<kw name="${count} = 0" type="foritem">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>Element Should Be Visible</arg>
+<arg>${element}</arg>
+</arguments>
+<assign>
+<var>${status}</var>
+</assign>
+<kw name="Element Should Be Visible" library="AppiumLibrary">
+<doc>Verifies that element identified with locator is visible.</doc>
+<arguments>
+<arg>${element}</arg>
+</arguments>
+<kw name="Capture Page Screenshot" library="AppiumLibrary">
+<doc>Takes a screenshot of the current page and embeds it into the log.</doc>
+<msg timestamp="20210724 16:55:57.915" level="INFO" html="yes">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="appium-screenshot-1.png"&gt;&lt;img src="appium-screenshot-1.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20210724 16:55:56.813" endtime="20210724 16:55:57.915"></status>
+</kw>
+<msg timestamp="20210724 16:55:57.917" level="FAIL">ValueError: Element locator 'xpath=//*[@text="Blok M Plaza"]' did not match any elements.</msg>
+<status status="FAIL" starttime="20210724 16:55:56.669" endtime="20210724 16:55:57.917"></status>
+</kw>
+<msg timestamp="20210724 16:55:57.917" level="INFO">${status} = False</msg>
+<status status="PASS" starttime="20210724 16:55:56.668" endtime="20210724 16:55:57.917"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>${status}==${true}</arg>
+</arguments>
+<status status="PASS" starttime="20210724 16:55:57.918" endtime="20210724 16:55:57.918"></status>
+</kw>
+<kw name="Swipe Up Half From Bottom" library="DeviceUtility">
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<arguments>
+<arg>${WIDTH} / 2</arg>
+</arguments>
+<assign>
+<var>${start_x}</var>
+</assign>
+<msg timestamp="20210724 16:55:57.919" level="INFO">${start_x} = 720.0</msg>
+<status status="PASS" starttime="20210724 16:55:57.919" endtime="20210724 16:55:57.919"></status>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<arguments>
+<arg>${HEIGHT} * 0.8</arg>
+</arguments>
+<assign>
+<var>${start_y}</var>
+</assign>
+<msg timestamp="20210724 16:55:57.920" level="INFO">${start_y} = 1846.4</msg>
+<status status="PASS" starttime="20210724 16:55:57.920" endtime="20210724 16:55:57.920"></status>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<arguments>
+<arg>${WIDTH} / 2</arg>
+</arguments>
+<assign>
+<var>${end_x}</var>
+</assign>
+<msg timestamp="20210724 16:55:57.920" level="INFO">${end_x} = 720.0</msg>
+<status status="PASS" starttime="20210724 16:55:57.920" endtime="20210724 16:55:57.920"></status>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<arguments>
+<arg>${HEIGHT} * 0.5</arg>
+</arguments>
+<assign>
+<var>${end_y}</var>
+</assign>
+<msg timestamp="20210724 16:55:57.921" level="INFO">${end_y} = 1154.0</msg>
+<status status="PASS" starttime="20210724 16:55:57.920" endtime="20210724 16:55:57.921"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>0.375</arg>
+</arguments>
+<msg timestamp="20210724 16:55:58.297" level="INFO">Slept 375 milliseconds</msg>
+<status status="PASS" starttime="20210724 16:55:57.921" endtime="20210724 16:55:58.297"></status>
+</kw>
+<kw name="Swipe" library="AppiumLibrary">
+<doc>Swipe from one point to another point, for an optional duration.</doc>
+<arguments>
+<arg>${start_x}</arg>
+<arg>${start_y}</arg>
+<arg>${end_x}</arg>
+<arg>${end_y}</arg>
+<arg>1000</arg>
+</arguments>
+<status status="PASS" starttime="20210724 16:55:58.298" endtime="20210724 16:55:58.824"></status>
+</kw>
+<status status="PASS" starttime="20210724 16:55:57.918" endtime="20210724 16:55:58.824"></status>
+</kw>
+<status status="PASS" starttime="20210724 16:55:56.668" endtime="20210724 16:55:58.824"></status>
+</kw>
+<kw name="${count} = 1" type="foritem">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>Element Should Be Visible</arg>
+<arg>${element}</arg>
+</arguments>
+<assign>
+<var>${status}</var>
+</assign>
+<kw name="Element Should Be Visible" library="AppiumLibrary">
+<doc>Verifies that element identified with locator is visible.</doc>
+<arguments>
+<arg>${element}</arg>
+</arguments>
+<kw name="Capture Page Screenshot" library="AppiumLibrary">
+<doc>Takes a screenshot of the current page and embeds it into the log.</doc>
+<msg timestamp="20210724 16:56:00.314" level="INFO" html="yes">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="appium-screenshot-2.png"&gt;&lt;img src="appium-screenshot-2.png" width="800px"&gt;&lt;/a&gt;</msg>
+<status status="PASS" starttime="20210724 16:55:59.228" endtime="20210724 16:56:00.314"></status>
+</kw>
+<msg timestamp="20210724 16:56:00.315" level="FAIL">ValueError: Element locator 'xpath=//*[@text="Blok M Plaza"]' did not match any elements.</msg>
+<status status="FAIL" starttime="20210724 16:55:58.825" endtime="20210724 16:56:00.315"></status>
+</kw>
+<msg timestamp="20210724 16:56:00.315" level="INFO">${status} = False</msg>
+<status status="PASS" starttime="20210724 16:55:58.825" endtime="20210724 16:56:00.315"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>${status}==${true}</arg>
+</arguments>
+<status status="PASS" starttime="20210724 16:56:00.315" endtime="20210724 16:56:00.316"></status>
+</kw>
+<kw name="Swipe Up Half From Bottom" library="DeviceUtility">
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<arguments>
+<arg>${WIDTH} / 2</arg>
+</arguments>
+<assign>
+<var>${start_x}</var>
+</assign>
+<msg timestamp="20210724 16:56:00.317" level="INFO">${start_x} = 720.0</msg>
+<status status="PASS" starttime="20210724 16:56:00.316" endtime="20210724 16:56:00.317"></status>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<arguments>
+<arg>${HEIGHT} * 0.8</arg>
+</arguments>
+<assign>
+<var>${start_y}</var>
+</assign>
+<msg timestamp="20210724 16:56:00.317" level="INFO">${start_y} = 1846.4</msg>
+<status status="PASS" starttime="20210724 16:56:00.317" endtime="20210724 16:56:00.317"></status>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<arguments>
+<arg>${WIDTH} / 2</arg>
+</arguments>
+<assign>
+<var>${end_x}</var>
+</assign>
+<msg timestamp="20210724 16:56:00.318" level="INFO">${end_x} = 720.0</msg>
+<status status="PASS" starttime="20210724 16:56:00.317" endtime="20210724 16:56:00.318"></status>
+</kw>
+<kw name="Evaluate" library="BuiltIn">
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<arguments>
+<arg>${HEIGHT} * 0.5</arg>
+</arguments>
+<assign>
+<var>${end_y}</var>
+</assign>
+<msg timestamp="20210724 16:56:00.318" level="INFO">${end_y} = 1154.0</msg>
+<status status="PASS" starttime="20210724 16:56:00.318" endtime="20210724 16:56:00.318"></status>
+</kw>
+<kw name="Sleep" library="BuiltIn">
+<doc>Pauses the test executed for the given time.</doc>
+<arguments>
+<arg>0.375</arg>
+</arguments>
+<msg timestamp="20210724 16:56:00.694" level="INFO">Slept 375 milliseconds</msg>
+<status status="PASS" starttime="20210724 16:56:00.318" endtime="20210724 16:56:00.694"></status>
+</kw>
+<kw name="Swipe" library="AppiumLibrary">
+<doc>Swipe from one point to another point, for an optional duration.</doc>
+<arguments>
+<arg>${start_x}</arg>
+<arg>${start_y}</arg>
+<arg>${end_x}</arg>
+<arg>${end_y}</arg>
+<arg>1000</arg>
+</arguments>
+<status status="PASS" starttime="20210724 16:56:00.694" endtime="20210724 16:56:01.189"></status>
+</kw>
+<status status="PASS" starttime="20210724 16:56:00.316" endtime="20210724 16:56:01.190"></status>
+</kw>
+<status status="PASS" starttime="20210724 16:55:58.824" endtime="20210724 16:56:01.190"></status>
+</kw>
+<kw name="${count} = 2" type="foritem">
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>Element Should Be Visible</arg>
+<arg>${element}</arg>
+</arguments>
+<assign>
+<var>${status}</var>
+</assign>
+<kw name="Element Should Be Visible" library="AppiumLibrary">
+<doc>Verifies that element identified with locator is visible.</doc>
+<arguments>
+<arg>${element}</arg>
+</arguments>
+<status status="PASS" starttime="20210724 16:56:01.190" endtime="20210724 16:56:02.247"></status>
+</kw>
+<msg timestamp="20210724 16:56:02.247" level="INFO">${status} = True</msg>
+<status status="PASS" starttime="20210724 16:56:01.190" endtime="20210724 16:56:02.247"></status>
+</kw>
+<kw name="Exit For Loop If" library="BuiltIn">
+<doc>Stops executing the enclosing for loop if the ``condition`` is true.</doc>
+<arguments>
+<arg>${status}==${true}</arg>
+</arguments>
+<msg timestamp="20210724 16:56:02.248" level="INFO">Exiting for loop altogether.</msg>
+<status status="PASS" starttime="20210724 16:56:02.247" endtime="20210724 16:56:02.248"></status>
+</kw>
+<status status="PASS" starttime="20210724 16:56:01.190" endtime="20210724 16:56:02.248"></status>
+</kw>
+<status status="PASS" starttime="20210724 16:55:56.668" endtime="20210724 16:56:02.248"></status>
+</kw>
+<kw name="Run Keyword And Return Status" library="BuiltIn">
+<doc>Runs the given keyword with given arguments and returns the status as a Boolean value.</doc>
+<arguments>
+<arg>Element Should Be Visible</arg>
+<arg>${element}</arg>
+</arguments>
+<assign>
+<var>${final_status}</var>
+</assign>
+<kw name="Element Should Be Visible" library="AppiumLibrary">
+<doc>Verifies that element identified with locator is visible.</doc>
+<arguments>
+<arg>${element}</arg>
+</arguments>
+<status status="PASS" starttime="20210724 16:56:02.249" endtime="20210724 16:56:02.336"></status>
+</kw>
+<msg timestamp="20210724 16:56:02.336" level="INFO">${final_status} = True</msg>
+<status status="PASS" starttime="20210724 16:56:02.248" endtime="20210724 16:56:02.337"></status>
+</kw>
+<kw name="Should Be Equal" library="BuiltIn">
+<doc>Fails if the given objects are unequal.</doc>
+<arguments>
+<arg>${final_status}</arg>
+<arg>${TRUE}</arg>
+<arg>error=Element is not visible</arg>
+</arguments>
+<status status="PASS" starttime="20210724 16:56:02.337" endtime="20210724 16:56:02.337"></status>
+</kw>
+<status status="PASS" starttime="20210724 16:55:56.667" endtime="20210724 16:56:02.337"></status>
+</kw>
+<kw name="Page Should Not Contain Element" library="AppiumLibrary">
+<doc>Verifies that current page not contains `locator` element.</doc>
+<arguments>
+<arg>xpath=//*[@text="${open_store}"]/parent::*/parent::*/following-sibling::*[1]//*[@text='Closed']</arg>
+</arguments>
+<msg timestamp="20210724 16:56:02.498" level="INFO">Current page not contains element 'xpath=//*[@text="Blok M Plaza"]/parent::*/parent::*/following-sibling::*[1]//*[@text='Closed']'.</msg>
+<status status="PASS" starttime="20210724 16:56:02.338" endtime="20210724 16:56:02.498"></status>
+</kw>
+<kw name="Click Element" library="AppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//*[@text="${open_store}"]</arg>
+</arguments>
+<msg timestamp="20210724 16:56:02.500" level="INFO">Clicking element 'xpath=//*[@text="Blok M Plaza"]'.</msg>
+<status status="PASS" starttime="20210724 16:56:02.498" endtime="20210724 16:56:02.691"></status>
+</kw>
+<status status="PASS" starttime="20210724 16:55:53.665" endtime="20210724 16:56:02.691"></status>
+</kw>
+<kw name="Click BurgerBar" library="Homepage">
+<kw name="Wait Until Element Is Visible" library="AppiumLibrary">
+<doc>Waits until element specified with `locator` is visible.</doc>
+<arguments>
+<arg>xpath=/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup[1]/android.view.ViewGroup</arg>
+<arg>timeout=3</arg>
+</arguments>
+<status status="PASS" starttime="20210724 16:56:02.692" endtime="20210724 16:56:04.171"></status>
+</kw>
+<kw name="Click Element" library="AppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup[1]/android.view.ViewGroup</arg>
+</arguments>
+<msg timestamp="20210724 16:56:04.175" level="INFO">Clicking element 'xpath=/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup[1]/android.view.ViewGroup'.</msg>
+<status status="PASS" starttime="20210724 16:56:04.172" endtime="20210724 16:56:04.655"></status>
+</kw>
+<status status="PASS" starttime="20210724 16:56:02.692" endtime="20210724 16:56:04.656"></status>
+</kw>
+<kw name="Change To Bahasa Indonesia" library="SettingsMenu">
+<kw name="Click Language" library="SettingsMenu">
+<kw name="Wait Until Element Is Visible" library="AppiumLibrary">
+<doc>Waits until element specified with `locator` is visible.</doc>
+<arguments>
+<arg>xpath=//*[@text="Language"]</arg>
+<arg>timeout=3</arg>
+</arguments>
+<status status="PASS" starttime="20210724 16:56:04.658" endtime="20210724 16:56:06.404"></status>
+</kw>
+<kw name="Click Element" library="AppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//*[@text="Language"]</arg>
+</arguments>
+<msg timestamp="20210724 16:56:06.407" level="INFO">Clicking element 'xpath=//*[@text="Language"]'.</msg>
+<status status="PASS" starttime="20210724 16:56:06.404" endtime="20210724 16:56:06.633"></status>
+</kw>
+<status status="PASS" starttime="20210724 16:56:04.657" endtime="20210724 16:56:06.634"></status>
+</kw>
+<kw name="Verify In Language Settings" library="SettingsMenu">
+<kw name="Wait Until Element Is Visible" library="AppiumLibrary">
+<doc>Waits until element specified with `locator` is visible.</doc>
+<arguments>
+<arg>xpath=//*[@text="Select Language"]</arg>
+<arg>timeout=3</arg>
+</arguments>
+<status status="PASS" starttime="20210724 16:56:06.635" endtime="20210724 16:56:08.356"></status>
+</kw>
+<status status="PASS" starttime="20210724 16:56:06.634" endtime="20210724 16:56:08.356"></status>
+</kw>
+<kw name="Choose Bahasa Indonesia" library="SettingsMenu">
+<kw name="Wait Until Element Is Visible" library="AppiumLibrary">
+<doc>Waits until element specified with `locator` is visible.</doc>
+<arguments>
+<arg>xpath=//*[@text="Bahasa Indonesia"]/preceding-sibling::*/*</arg>
+<arg>timeout=3</arg>
+</arguments>
+<status status="PASS" starttime="20210724 16:56:08.357" endtime="20210724 16:56:08.424"></status>
+</kw>
+<kw name="Click Element" library="AppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//*[@text="Bahasa Indonesia"]/preceding-sibling::*/*</arg>
+</arguments>
+<msg timestamp="20210724 16:56:08.426" level="INFO">Clicking element 'xpath=//*[@text="Bahasa Indonesia"]/preceding-sibling::*/*'.</msg>
+<status status="PASS" starttime="20210724 16:56:08.425" endtime="20210724 16:56:11.777"></status>
+</kw>
+<status status="PASS" starttime="20210724 16:56:08.356" endtime="20210724 16:56:11.777"></status>
+</kw>
+<kw name="Click Save Button" library="SettingsMenu">
+<kw name="Click Element" library="AppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=//*[@text="Save"]</arg>
+</arguments>
+<msg timestamp="20210724 16:56:11.780" level="INFO">Clicking element 'xpath=//*[@text="Save"]'.</msg>
+<status status="PASS" starttime="20210724 16:56:11.778" endtime="20210724 16:56:11.930"></status>
+</kw>
+<status status="PASS" starttime="20210724 16:56:11.777" endtime="20210724 16:56:11.930"></status>
+</kw>
+<status status="PASS" starttime="20210724 16:56:04.656" endtime="20210724 16:56:11.931"></status>
+</kw>
+<kw name="Click BurgerBar" library="Homepage">
+<kw name="Wait Until Element Is Visible" library="AppiumLibrary">
+<doc>Waits until element specified with `locator` is visible.</doc>
+<arguments>
+<arg>xpath=/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup[1]/android.view.ViewGroup</arg>
+<arg>timeout=3</arg>
+</arguments>
+<status status="PASS" starttime="20210724 16:56:11.931" endtime="20210724 16:56:13.083"></status>
+</kw>
+<kw name="Click Element" library="AppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>xpath=/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup[1]/android.view.ViewGroup</arg>
+</arguments>
+<msg timestamp="20210724 16:56:13.085" level="INFO">Clicking element 'xpath=/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup[1]/android.view.ViewGroup'.</msg>
+<status status="PASS" starttime="20210724 16:56:13.083" endtime="20210724 16:56:13.267"></status>
+</kw>
+<status status="PASS" starttime="20210724 16:56:11.931" endtime="20210724 16:56:13.268"></status>
+</kw>
+<kw name="Verify Already Changed To Bahasa Indonesia" library="SettingsMenu">
+<kw name="Verify Bahasa on Menu" library="SettingsMenu">
+<kw name="Wait Until Element Is Visible" library="AppiumLibrary">
+<doc>Waits until element specified with `locator` is visible.</doc>
+<arguments>
+<arg>xpath=//*[@text="Bahasa"]</arg>
+<arg>timeout=3</arg>
+</arguments>
+<status status="PASS" starttime="20210724 16:56:13.269" endtime="20210724 16:56:14.890"></status>
+</kw>
+<status status="PASS" starttime="20210724 16:56:13.269" endtime="20210724 16:56:14.890"></status>
+</kw>
+<kw name="Verify Masuk on Menu" library="SettingsMenu">
+<kw name="Wait Until Element Is Visible" library="AppiumLibrary">
+<doc>Waits until element specified with `locator` is visible.</doc>
+<arguments>
+<arg>xpath=//*[@text="Masuk"]</arg>
+<arg>timeout=3</arg>
+</arguments>
+<status status="PASS" starttime="20210724 16:56:14.891" endtime="20210724 16:56:14.967"></status>
+</kw>
+<status status="PASS" starttime="20210724 16:56:14.890" endtime="20210724 16:56:14.967"></status>
+</kw>
+<status status="PASS" starttime="20210724 16:56:13.268" endtime="20210724 16:56:14.967"></status>
+</kw>
+<status status="PASS" starttime="20210724 16:55:53.081" endtime="20210724 16:56:14.967" critical="yes"></status>
+</test>
+<kw name="Close Appium Server" library="Setup" type="teardown">
+<kw name="Run Process" library="Process">
+<doc>Runs a process and waits for it to complete.</doc>
+<arguments>
+<arg>adb devices -l</arg>
+<arg>shell=True</arg>
+</arguments>
+<assign>
+<var>${device}</var>
+</assign>
+<msg timestamp="20210724 16:56:14.971" level="INFO">Starting process:
+adb devices -l</msg>
+<msg timestamp="20210724 16:56:14.978" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20210724 16:56:15.011" level="INFO">Process completed.</msg>
+<msg timestamp="20210724 16:56:15.012" level="INFO">${device} = &lt;result object with rc 0&gt;</msg>
+<status status="PASS" starttime="20210724 16:56:14.970" endtime="20210724 16:56:15.012"></status>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<doc>Logs the given message to the console.</doc>
+<arguments>
+<arg>${device.stdout}</arg>
+</arguments>
+<status status="PASS" starttime="20210724 16:56:15.012" endtime="20210724 16:56:15.013"></status>
+</kw>
+<kw name="Run Process" library="Process">
+<doc>Runs a process and waits for it to complete.</doc>
+<arguments>
+<arg>adb -s ${UDID} shell pm clear ${APP_PACKAGE}</arg>
+<arg>shell=True</arg>
+</arguments>
+<msg timestamp="20210724 16:56:15.013" level="INFO">Starting process:
+adb -s emulator-5554 shell pm clear com.flashcoffee</msg>
+<msg timestamp="20210724 16:56:15.019" level="INFO">Waiting for process to complete.</msg>
+<msg timestamp="20210724 16:56:15.418" level="INFO">Process completed.</msg>
+<status status="PASS" starttime="20210724 16:56:15.013" endtime="20210724 16:56:15.419"></status>
+</kw>
+<kw name="Close Application" library="AppiumLibrary">
+<doc>Closes the current application and also close webdriver session.</doc>
+<status status="PASS" starttime="20210724 16:56:15.419" endtime="20210724 16:56:16.768"></status>
+</kw>
+<status status="PASS" starttime="20210724 16:56:14.970" endtime="20210724 16:56:16.769"></status>
+</kw>
+<status status="PASS" starttime="20210724 16:55:40.359" endtime="20210724 16:56:16.769"></status>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0">Critical Tests</stat>
+<stat pass="1" fail="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" id="s1" name="FlashCoffeeTest">FlashCoffeeTest</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
